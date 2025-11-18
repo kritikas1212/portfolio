@@ -18,13 +18,29 @@ export default function Home() {
       <Navbar />
       <main className="min-h-screen">
         <Hero />
+        <div className="section-divider" />
+        <p className="section-paragraph-spacing" aria-hidden="true"></p>
         <About />
+        <div className="section-divider" />
+        <p className="section-paragraph-spacing" aria-hidden="true"></p>
         <Experience />
+        <div className="section-divider" />
+        <p className="section-paragraph-spacing" aria-hidden="true"></p>
         <Education />
+        <div className="section-divider" />
+        <p className="section-paragraph-spacing" aria-hidden="true"></p>
         <Projects />
+        <div className="section-divider" />
+        <p className="section-paragraph-spacing" aria-hidden="true"></p>
         <Skills />
+        <div className="section-divider" />
+        <p className="section-paragraph-spacing" aria-hidden="true"></p>
         <Achievements />
+        <div className="section-divider" />
+        <p className="section-paragraph-spacing" aria-hidden="true"></p>
         <Blog />
+        <div className="section-divider" />
+        <p className="section-paragraph-spacing" aria-hidden="true"></p>
         <Contact />
       </main>
       <Footer />

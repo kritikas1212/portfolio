@@ -53,7 +53,7 @@ export default function Blog() {
   const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
 
   return (
-    <section id="blog" className="relative py-20 md:py-32 bg-slate-900">
+    <section id="blog" className="relative py-24 md:py-40">
       <div className="max-w-screen-2xl mx-auto px-6 md:px-8 lg:px-16 xl:px-24">
         <motion.div
           ref={ref}
@@ -64,7 +64,8 @@ export default function Blog() {
         >
           {/* Section Header */}
           <motion.div variants={itemVariants} className="text-center">
-            <h2 className="text-5xl md:text-6xl font-bold text-slate-100 mb-16 md:mb-20">
+            <h2 className="text-5xl md:text-6xl font-bold text-slate-100 mb-16 md:mb-20 flex items-center justify-center gap-4">
+              <span className="text-4xl md:text-5xl">📝</span>
               <span className="text-slate-300">Blog & </span>
               <span className="text-cyan-400">Articles</span>
             </h2>
@@ -77,35 +78,55 @@ export default function Blog() {
           </motion.div>
 
           {/* Blog Posts Grid - More Spacious */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {blogPosts.map((post, index) => (
               <motion.article
                 key={index}
                 variants={itemVariants}
-                className="group relative bg-gradient-to-br from-slate-800/80 to-slate-900/80 rounded-xl overflow-hidden border border-slate-700/50 hover:border-cyan-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/20 container-content"
+                className="group relative bg-gradient-to-br from-slate-800/80 to-slate-900/80 rounded-xl overflow-hidden border border-slate-700/50 hover:border-cyan-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/20 container-content hover:-translate-y-2"
                 whileHover={{ scale: 1.03, y: -8 }}
                 style={{ transformOrigin: 'center' }}
               >
-                {/* Image placeholder with gradient */}
-                <div className="h-56 bg-gradient-to-br from-cyan-500/20 via-blue-500/20 to-purple-500/20 flex items-center justify-center relative overflow-hidden">
-                  <div className="text-8xl">📝</div>
+                {/* Image placeholder with gradient - Enhanced */}
+                <div className="h-56 bg-gradient-to-br from-cyan-500/30 via-blue-500/25 to-purple-500/30 flex items-center justify-center relative overflow-hidden border-b border-slate-700/50">
+                  {/* Animated background pattern */}
+                  <div className="absolute inset-0 opacity-20">
+                    <div className="absolute inset-0" style={{
+                      backgroundImage: `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 2px, transparent 2px)`,
+                      backgroundSize: '30px 30px',
+                    }} />
+                  </div>
+                  <motion.div
+                    className="text-8xl relative z-10"
+                    animate={{
+                      scale: [1, 1.1, 1],
+                      rotate: [0, 5, -5, 0],
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                    }}
+                  >
+                    📝
+                  </motion.div>
 
-                  {/* Draft badge */}
-                  <span className="absolute top-6 left-6 bg-yellow-500/20 border border-yellow-500/50 text-yellow-400 px-4 py-2 rounded-full text-sm font-semibold backdrop-blur-sm">
+                  {/* Draft badge - Enhanced */}
+                  <span className="absolute top-6 left-6 bg-gradient-to-r from-yellow-500/30 to-amber-500/30 border-2 border-yellow-500/50 text-yellow-300 px-5 py-2.5 rounded-full text-sm font-bold backdrop-blur-md shadow-lg shadow-yellow-500/20">
                     {post.status}
                   </span>
                 </div>
 
-                <div className="p-10 md:p-12">
-                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-cyan-400 transition-colors line-clamp-2 leading-tight">
+                <div className="p-8 md:p-10">
+                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-cyan-400 transition-colors line-clamp-2 leading-tight text-center">
                     {post.title}
                   </h3>
 
                   {/* Excerpt */}
-                  <p className="text-slate-400 mb-6 line-clamp-3 text-base leading-relaxed">{post.excerpt}</p>
+                  <p className="text-slate-400 mb-6 line-clamp-3 text-base leading-relaxed text-center">{post.excerpt}</p>
 
                   {/* Meta Info */}
-                  <div className="flex items-center gap-6 text-base text-slate-500 mb-6">
+                  <div className="flex items-center justify-center gap-6 text-base text-slate-500 mb-6">
                     <div className="flex items-center gap-2">
                       <Calendar size={16} />
                       {post.date}
@@ -117,7 +138,7 @@ export default function Blog() {
                   </div>
 
                   {/* Tags */}
-                  <div className="flex flex-wrap gap-3 mb-6">
+                  <div className="flex flex-wrap gap-3 mb-6 justify-center">
                     {post.tags.map((tag) => (
                       <span
                         key={tag}
@@ -128,10 +149,10 @@ export default function Blog() {
                     ))}
                   </div>
 
-                  {/* Read More */}
-                  <button className="flex items-center gap-3 px-6 py-3 text-cyan-400 hover:text-cyan-300 hover:bg-cyan-500/10 transition-all text-lg font-medium group/btn rounded-lg">
-                    Read More
-                    <ArrowRight size={20} className="group-hover/btn:translate-x-1 transition-transform" />
+                  {/* Read More - Attractively Styled Button */}
+                  <button className="btn-primary group/btn flex items-center gap-3 px-6 py-3 text-lg font-medium w-full sm:w-auto justify-center">
+                    <span className="relative z-10">Read More</span>
+                    <ArrowRight size={20} className="group-hover/btn:translate-x-1 transition-transform relative z-10" />
                   </button>
                 </div>
               </motion.article>

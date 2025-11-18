@@ -45,7 +45,7 @@ export default function Education() {
   const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
 
   return (
-    <section id="education" className="relative py-20 md:py-32 bg-slate-900">
+    <section id="education" className="relative py-24 md:py-40">
       <div className="max-w-screen-2xl mx-auto px-6 md:px-8 lg:px-16 xl:px-24">
         <motion.div
           ref={ref}
@@ -56,7 +56,8 @@ export default function Education() {
         >
           {/* Section Header */}
           <motion.div variants={itemVariants} className="text-center">
-            <h2 className="text-5xl md:text-6xl font-bold text-slate-100 mb-16 md:mb-20">
+            <h2 className="text-5xl md:text-6xl font-bold text-slate-100 mb-16 md:mb-20 flex items-center justify-center gap-4">
+              <span className="text-4xl md:text-5xl">🎓</span>
               <span className="text-slate-300">Education</span>
             </h2>
             <motion.div
@@ -68,37 +69,35 @@ export default function Education() {
           </motion.div>
 
           {/* Education Cards - More Spacious */}
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="grid md:grid-cols-2 gap-10">
             {education.map((edu, index) => (
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="group relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-10 md:p-12 hover:border-cyan-500/50 hover:shadow-2xl hover:shadow-cyan-500/10 transition-all duration-300 overflow-hidden container-content"
+                className="group relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-8 md:p-10 hover:border-cyan-500/50 hover:shadow-2xl hover:shadow-cyan-500/10 transition-all duration-300 overflow-hidden container-content"
                 whileHover={{ scale: 1.03, y: -8 }}
                 style={{ transformOrigin: 'center' }}
               >
                 {/* Glow effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/5 to-cyan-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
-                <div className="relative z-10 flex items-start gap-6 mb-8 overflow-hidden">
-                  <div className="text-6xl flex-shrink-0">{edu.icon}</div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-2xl md:text-3xl font-bold text-slate-100 mb-3 group-hover:text-cyan-400 transition-colors break-words">
-                      {edu.degree}
-                    </h3>
-                    <h4 className="text-xl text-cyan-400 mb-2 break-words">{edu.major}</h4>
-                  </div>
+                <div className="relative z-10 text-center mb-8">
+                  <div className="text-6xl mb-4">{edu.icon}</div>
+                  <h3 className="text-2xl md:text-3xl font-bold text-slate-100 mb-3 group-hover:text-cyan-400 transition-colors break-words">
+                    {edu.degree}
+                  </h3>
+                  <h4 className="text-xl text-cyan-400 mb-2 break-words">{edu.major}</h4>
                 </div>
 
-                <div className="relative z-10 space-y-4">
-                  <div className="flex items-center gap-3 text-slate-300 text-base">
+                <div className="relative z-10 space-y-4 text-center">
+                  <div className="flex items-center justify-center gap-3 text-slate-300 text-base">
                     <GraduationCap size={20} className="text-emerald-400" />
                     <span className="font-medium">{edu.institution}</span>
                   </div>
-                  <div className="flex items-center gap-3 text-slate-400 text-base">
+                  <div className="flex items-center justify-center gap-3 text-slate-400 text-base">
                     <MapPin size={20} />
                     <span>{edu.location}</span>
                   </div>
-                  <div className="flex items-center gap-3 text-slate-400 text-base">
+                  <div className="flex items-center justify-center gap-3 text-slate-400 text-base">
                     <Calendar size={20} />
                     <span>{edu.duration}</span>
                   </div>

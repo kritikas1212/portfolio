@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { GraduationCap, Briefcase, Trophy, BarChart3, Zap, ShoppingBag, Sparkles } from 'lucide-react';
+import Image from 'next/image';
 
 const highlights = [
   { icon: GraduationCap, text: 'Dual Degrees: IIT Madras + Galgotias', color: 'text-blue-400', bg: 'from-blue-500/10 to-cyan-500/10' },
@@ -45,7 +46,7 @@ export default function About() {
   const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
 
   return (
-    <section id="about" className="relative py-20 md:py-32 bg-slate-900 overflow-hidden">
+    <section id="about" className="relative py-24 md:py-40 overflow-hidden bg-gradient-to-b from-slate-900 to-slate-950/50">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full blur-3xl" />
@@ -58,16 +59,17 @@ export default function About() {
           initial="hidden"
           animate={inView ? 'visible' : 'hidden'}
           variants={containerVariants}
-          className="space-y-16 md:space-y-20"
+          className="space-y-8 md:space-y-10"
         >
           {/* Section Header */}
           <motion.div variants={itemVariants} className="text-center">
             <motion.h2
-              className="text-5xl md:text-6xl font-bold text-slate-100 mb-16 md:mb-20"
+              className="text-5xl md:text-6xl font-bold text-slate-100 mb-16 md:mb-20 flex items-center justify-center gap-4"
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.3 }}
             >
+              <span className="text-4xl md:text-5xl">👋</span>
               <span className="text-slate-300">About </span>
               <span className="text-cyan-400">Me</span>
             </motion.h2>
@@ -80,7 +82,7 @@ export default function About() {
           </motion.div>
 
           {/* Main Content - Two Column Layout */}
-          <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div className="grid md:grid-cols-2 gap-20 items-center">
             {/* Left Column - Image with Animation */}
             <motion.div
               variants={itemVariants}
@@ -109,7 +111,25 @@ export default function About() {
                   animate={inView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ delay: 0.5, type: 'spring' }}
                 >
-                  <div className="w-full h-full bg-gradient-to-br from-blue-500/20 via-cyan-500/20 to-emerald-500/20 flex items-center justify-center relative">
+                  {/* About Me Photo - Replace 'about-photo.jpg' with your actual image filename */}
+                  <Image
+                    src="/about-photo.jpg"
+                    alt="Kritika Singh"
+                    width={320}
+                    height={320}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      // Fallback to emoji if image doesn't exist
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const fallback = target.parentElement?.querySelector('.fallback-emoji');
+                      if (fallback) {
+                        (fallback as HTMLElement).style.display = 'flex';
+                      }
+                    }}
+                  />
+                  {/* Fallback emoji - shown if image doesn't exist */}
+                  <div className="fallback-emoji hidden w-full h-full bg-gradient-to-br from-blue-500/20 via-cyan-500/20 to-emerald-500/20 items-center justify-center relative">
                     <motion.span
                       className="text-7xl relative z-10"
                       animate={{
@@ -136,7 +156,7 @@ export default function About() {
             </motion.div>
 
             {/* Right Column - Content */}
-            <motion.div variants={itemVariants} className="space-y-10">
+            <motion.div variants={itemVariants} className="space-y-8 text-center">
               <motion.p
                 className="text-xl md:text-2xl text-slate-300 leading-relaxed"
                 initial={{ opacity: 0, x: 20 }}
@@ -157,22 +177,24 @@ export default function About() {
           </div>
 
           {/* Highlights Grid */}
-          <motion.div variants={itemVariants}>
-            <motion.h3
-              className="text-4xl md:text-5xl font-bold text-slate-100 mb-16 text-center"
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
-              transition={{ delay: 0.8 }}
-            >
-              Key Highlights
-            </motion.h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <motion.div variants={itemVariants} className="mt-3 md:mt-4 lg:mt-5">
+            <div style={{ paddingTop: '20px', paddingBottom: '15px' }}>
+              <motion.h3
+                className="text-4xl md:text-5xl font-bold text-slate-100 mb-20 text-center"
+                initial={{ opacity: 0 }}
+                animate={inView ? { opacity: 1 } : {}}
+                transition={{ delay: 0.8 }}
+              >
+                Key Highlights
+              </motion.h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {highlights.map((highlight, index) => {
                 const Icon = highlight.icon;
                 return (
                   <motion.div
                     key={index}
-                    className={`group relative bg-gradient-to-br ${highlight.bg} backdrop-blur-sm border border-slate-700/50 rounded-xl p-10 md:p-12 overflow-hidden container-content`}
+                    className={`group relative bg-gradient-to-br ${highlight.bg} backdrop-blur-sm border border-slate-700/50 rounded-xl p-8 md:p-10 overflow-hidden container-content hover:shadow-2xl transition-all duration-300`}
                     initial={{ opacity: 0, y: 30, scale: 0.9 }}
                     animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
                     transition={{
@@ -199,8 +221,8 @@ export default function About() {
                         ease: 'linear',
                       }}
                     />
-                    <div className="relative z-10 h-full flex flex-col overflow-hidden">
-                      <Icon className={`w-14 h-14 mb-6 ${highlight.color} flex-shrink-0`} />
+                    <div className="relative z-10 h-full flex flex-col overflow-hidden text-center">
+                      <Icon className={`w-14 h-14 mb-6 ${highlight.color} flex-shrink-0 mx-auto`} />
                       <p className="text-slate-300 font-medium text-lg leading-relaxed break-words">{highlight.text}</p>
                     </div>
                   </motion.div>
@@ -210,20 +232,22 @@ export default function About() {
           </motion.div>
 
           {/* Tech Stack */}
-          <motion.div variants={itemVariants} className="space-y-8">
-            <motion.h3
-              className="text-4xl md:text-5xl font-bold text-slate-100 mb-16 text-center"
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
-              transition={{ delay: 1.5 }}
-            >
-              Tech Stack
-            </motion.h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+          <motion.div variants={itemVariants} className="space-y-8 mt-3 md:mt-4 lg:mt-5">
+            <div style={{ paddingTop: '20px', paddingBottom: '15px' }}>
+              <motion.h3
+                className="text-4xl md:text-5xl font-bold text-slate-100 mb-20 text-center"
+                initial={{ opacity: 0 }}
+                animate={inView ? { opacity: 1 } : {}}
+                transition={{ delay: 1.5 }}
+              >
+                Tech Stack
+              </motion.h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
               {Object.entries(techStack).map(([category, technologies], categoryIndex) => (
               <motion.div
                 key={category}
-                className="group relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-10 md:p-12 overflow-hidden container-content"
+                className="group relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-8 md:p-10 overflow-hidden container-content hover:shadow-2xl transition-all duration-300"
                 initial={{ opacity: 0, y: 30 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{
@@ -250,8 +274,8 @@ export default function About() {
                   }}
                 />
                 <div className="relative z-10 h-full flex flex-col">
-                  <h4 className="text-xl md:text-2xl font-semibold text-cyan-400 mb-8">{category}</h4>
-                  <div className="flex flex-wrap gap-4">
+                  <h4 className="text-xl md:text-2xl font-semibold text-cyan-400 mb-8 text-center">{category}</h4>
+                  <div className="flex flex-wrap gap-4 justify-center">
                     {technologies.map((tech, techIndex) => (
                       <motion.span
                         key={tech}

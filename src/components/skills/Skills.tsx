@@ -2,6 +2,41 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { Code2, Database, ShoppingCart, Brain, Wrench, Zap } from 'lucide-react';
+
+// Tech icon mapping
+const techIcons: Record<string, string> = {
+  'Python': '🐍',
+  'JavaScript': '📜',
+  'TypeScript': '📘',
+  'React': '⚛️',
+  'Next.js': '▲',
+  'Node.js': '🟢',
+  'TensorFlow': '🧠',
+  'Shopify': '🛍️',
+  'MongoDB': '🍃',
+  'MySQL': '🗄️',
+  'PostgreSQL': '🐘',
+  'Git': '📦',
+  'HTML': '🌐',
+  'CSS': '🎨',
+  'Tailwind': '💨',
+  'Express': '🚂',
+  'scikit-learn': '🔬',
+  'Streamlit': '📊',
+  'Liquid': '💧',
+  'Java': '☕',
+  'C/C++': '⚙️',
+  'SQL': '📊',
+  'React Native': '📱',
+  'VS Code': '💻',
+  'Vercel/Netlify': '☁️',
+  'Canva': '🎨',
+  'GitBook': '📚',
+  'Google Analytics': '📈',
+  'Adobe Analytics': '📊',
+  'Google Lighthouse': '🚀',
+};
 
 const skillCategories = [
   {
@@ -94,7 +129,7 @@ export default function Skills() {
   const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
 
   return (
-    <section id="skills" className="relative py-20 md:py-32 bg-slate-900">
+    <section id="skills" className="relative py-24 md:py-40">
       <div className="max-w-screen-2xl mx-auto px-6 md:px-8 lg:px-16 xl:px-24">
         <motion.div
           ref={ref}
@@ -105,7 +140,8 @@ export default function Skills() {
         >
           {/* Section Header */}
           <motion.div variants={itemVariants} className="text-center">
-            <h2 className="text-5xl md:text-6xl font-bold text-slate-100 mb-16 md:mb-20">
+            <h2 className="text-5xl md:text-6xl font-bold text-slate-100 mb-16 md:mb-20 flex items-center justify-center gap-4">
+              <span className="text-4xl md:text-5xl">⚡</span>
               <span className="text-slate-300">Skills & </span>
               <span className="text-cyan-400">Expertise</span>
             </h2>
@@ -118,7 +154,7 @@ export default function Skills() {
           </motion.div>
 
           {/* Skills Grid - Brittany Chiang Style */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14 md:gap-16">
             {skillCategories.map((category, categoryIndex) => (
               <motion.div
                 key={category.category}
@@ -126,40 +162,53 @@ export default function Skills() {
                 className="group"
               >
                 {/* Category Title - More spacing */}
-                <h3 className="text-xl font-bold text-cyan-400 mb-8 flex items-center gap-3">
+                <h3 className="text-xl font-bold text-cyan-400 mb-8 flex items-center justify-center gap-3">
                   <span className="text-2xl">{category.icon}</span>
                   {category.category}
                 </h3>
 
                 {/* Skills List - More spacing */}
-                <div className="space-y-6">
+                <div className="space-y-7">
                   {category.skills.map((skill, skillIndex) => (
                     <div key={skill.name} className="group/skill">
                       {/* Skill name and percentage */}
-                      <div className="flex justify-between items-baseline mb-3">
-                        <span className="text-slate-300 text-base font-medium group-hover/skill:text-cyan-400 transition-colors">
-                          {skill.name}
-                        </span>
-                        <span className="text-cyan-400 font-bold text-sm">
+                      <div className="flex justify-between items-center mb-3">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xl">{techIcons[skill.name] || '💻'}</span>
+                          <span className="text-slate-300 text-base font-medium group-hover/skill:text-cyan-400 transition-colors">
+                            {skill.name}
+                          </span>
+                        </div>
+                        <span className="text-cyan-400 font-bold text-sm bg-cyan-500/10 px-2 py-1 rounded">
                           {skill.level}%
                         </span>
                       </div>
 
-                      {/* Progress bar - Taller */}
-                      <div className="h-2.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700/50">
+                      {/* Progress bar - Taller with enhanced animation */}
+                      <div className="h-3 bg-slate-800 rounded-full overflow-hidden border border-slate-700/50 relative">
                         <motion.div
-                          className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full transition-all duration-1000 ease-out relative overflow-hidden"
+                          className="h-full bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 rounded-full transition-all duration-1000 ease-out relative overflow-hidden"
                           style={{ width: `${skill.level}%` }}
                           initial={{ width: 0 }}
                           animate={inView ? { width: `${skill.level}%` } : { width: 0 }}
                           transition={{
                             delay: (categoryIndex * 0.1) + (skillIndex * 0.05),
-                            duration: 1,
-                            ease: 'easeOut',
+                            duration: 1.2,
+                            ease: [0.22, 1, 0.36, 1],
                           }}
                         >
                           {/* Shine effect */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover/skill:translate-x-full transition-transform duration-1000" />
+                          <motion.div 
+                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
+                            initial={{ x: '-100%' }}
+                            animate={inView ? { x: '200%' } : { x: '-100%' }}
+                            transition={{
+                              delay: (categoryIndex * 0.1) + (skillIndex * 0.05) + 1,
+                              duration: 1.5,
+                              repeat: Infinity,
+                              repeatDelay: 2,
+                            }}
+                          />
                         </motion.div>
                       </div>
                     </div>

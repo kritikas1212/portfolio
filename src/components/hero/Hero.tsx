@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Github, Linkedin, Mail, Download, ChevronDown, Sparkles, ArrowRight } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
+import Image from 'next/image';
 
 const taglines = [
   'Full-Stack Developer',
@@ -105,16 +106,30 @@ export default function Hero() {
       ref={ref}
       className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
     >
-      {/* Enhanced Animated Background Orbs with Parallax */}
+      {/* Enhanced Animated Background with Gradient Mesh */}
       <div className="absolute inset-0 overflow-hidden">
+        {/* Animated gradient mesh background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-950/50 to-slate-900"></div>
+        
+        {/* SVG Pattern Overlay */}
+        <svg className="absolute inset-0 w-full h-full opacity-10" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="currentColor" strokeWidth="1" className="text-cyan-500/20"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+
+        {/* Animated gradient orbs */}
         <motion.div
-          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-3xl"
+          className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-gradient-to-br from-blue-500/30 via-cyan-500/20 to-transparent rounded-full blur-3xl"
           style={{ y }}
           animate={{
             x: [0, 100, 0],
             y: [0, 50, 0],
             scale: [1, 1.4, 1],
-            opacity: [0.3, 0.5, 0.3],
+            opacity: [0.4, 0.6, 0.4],
           }}
           transition={{
             duration: 20,
@@ -123,13 +138,13 @@ export default function Hero() {
           }}
         />
         <motion.div
-          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-emerald-500/20 rounded-full blur-3xl"
+          className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-gradient-to-br from-emerald-500/30 via-teal-500/20 to-transparent rounded-full blur-3xl"
           style={{ y }}
           animate={{
             x: [0, -100, 0],
             y: [0, -50, 0],
             scale: [1, 1.4, 1],
-            opacity: [0.3, 0.5, 0.3],
+            opacity: [0.4, 0.6, 0.4],
           }}
           transition={{
             duration: 25,
@@ -138,7 +153,7 @@ export default function Hero() {
           }}
         />
         <motion.div
-          className="absolute top-1/2 left-1/2 w-[400px] h-[400px] bg-cyan-500/15 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2"
+          className="absolute top-1/2 left-1/2 w-[500px] h-[500px] bg-gradient-to-br from-amber-500/20 via-yellow-500/15 to-transparent rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2"
           animate={{
             x: (mousePosition.x - 50) * 0.1,
             y: (mousePosition.y - 50) * 0.1,
@@ -172,14 +187,14 @@ export default function Hero() {
 
       {/* Content */}
       <motion.div 
-        className="relative z-10 max-w-screen-2xl mx-auto px-6 md:px-8 lg:px-16 xl:px-24 text-center py-20 md:py-32"
+        className="relative z-10 max-w-screen-2xl mx-auto px-6 md:px-8 lg:px-16 xl:px-24 text-center py-24 md:py-40"
         style={{ opacity }}
       >
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="space-y-12"
+          className="space-y-16 md:space-y-20"
         >
           {/* Animated Sparkle Icons */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-20">
@@ -206,38 +221,99 @@ export default function Hero() {
             ))}
           </div>
 
+          {/* Professional Avatar */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, y: 30 }}
+            animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
+            transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-12"
+          >
+            <div className="relative inline-block">
+              {/* Animated gradient border */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-cyan-400 via-blue-500 to-emerald-500 rounded-full blur-xl opacity-60"
+                animate={{
+                  rotate: [0, 360],
+                  scale: [1, 1.1, 1],
+                }}
+                transition={{
+                  rotate: { duration: 20, repeat: Infinity, ease: 'linear' },
+                  scale: { duration: 4, repeat: Infinity, ease: 'easeInOut' },
+                }}
+              />
+              {/* Avatar container */}
+              <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-cyan-400/50 bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden shadow-2xl shadow-cyan-500/30">
+                {/* Professional avatar - Replace 'hero-photo.jpg' with your actual image filename */}
+                <Image
+                  src="/hero-photo.jpg"
+                  alt="Kritika Singh"
+                  width={160}
+                  height={160}
+                  className="w-full h-full object-cover"
+                  priority
+                  onError={(e) => {
+                    // Fallback to emoji if image doesn't exist
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    const fallback = target.parentElement?.querySelector('.fallback-emoji');
+                    if (fallback) {
+                      (fallback as HTMLElement).style.display = 'flex';
+                    }
+                  }}
+                />
+                {/* Fallback emoji - shown if image doesn't exist */}
+                <div className="fallback-emoji hidden w-full h-full bg-gradient-to-br from-cyan-500/20 via-blue-500/20 to-emerald-500/20 items-center justify-center">
+                  <span className="text-6xl md:text-7xl">👩‍💻</span>
+                </div>
+                {/* Shine effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none"
+                  animate={{
+                    x: ['-100%', '100%'],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    repeatDelay: 2,
+                    ease: 'easeInOut',
+                  }}
+                />
+              </div>
+            </div>
+          </motion.div>
+
           {/* Greeting with Stagger Animation - LARGER */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ delay: 0.3, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
             <motion.h1
               className="text-6xl md:text-7xl lg:text-8xl font-bold text-slate-100 mb-8 leading-tight"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={inView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: 0.3, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
               <motion.span
                 initial={{ opacity: 0, x: -20 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ delay: 0.4 }}
+                transition={{ delay: 0.5 }}
                 className="text-slate-300"
               >
                 Hi, I&apos;m{' '}
               </motion.span>
               <motion.span
-                className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent bg-[length:200%_auto] animate-[gradient_3s_ease_infinite]"
+                className="bg-gradient-to-r from-cyan-400 via-blue-500 to-emerald-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-[gradient_3s_ease_infinite]"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={inView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ delay: 0.5, duration: 0.8, type: 'spring', stiffness: 200 }}
+                transition={{ delay: 0.6, duration: 0.8, type: 'spring', stiffness: 200 }}
               >
                 Kritika Singh
               </motion.span>
               <motion.span
                 initial={{ opacity: 0, rotate: -20 }}
                 animate={inView ? { opacity: 1, rotate: 0 } : {}}
-                transition={{ delay: 0.7, type: 'spring', stiffness: 200 }}
+                transition={{ delay: 0.8, type: 'spring', stiffness: 200 }}
                 className="inline-block ml-4"
               >
                 👋
@@ -250,7 +326,7 @@ export default function Hero() {
             className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-400 min-h-[80px] md:min-h-[100px] flex items-center justify-center gap-2 mb-10"
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.6, duration: 0.8 }}
+            transition={{ delay: 0.7, duration: 0.8 }}
           >
             <span>I&apos;m a </span>
             <span className="text-cyan-400 font-bold relative">
@@ -265,47 +341,52 @@ export default function Hero() {
 
           {/* Description - LARGER with better spacing */}
           <motion.p
-            className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto leading-relaxed mb-16"
+            className="text-xl md:text-2xl lg:text-3xl text-slate-300 max-w-4xl mx-auto leading-relaxed mb-20 px-4 font-medium"
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.8, duration: 0.8 }}
+            transition={{ delay: 0.9, duration: 0.8 }}
           >
-            Building scalable e-commerce solutions and data-driven applications
+            Building scalable e-commerce solutions and data-driven applications with a passion for clean code and exceptional user experiences
           </motion.p>
 
-          {/* Status Badge with Pulse - MORE SPACING */}
+          {/* Status Badge with Pulse - Enhanced Design */}
           <motion.div
-            className="inline-flex items-center space-x-3 px-6 py-3 bg-emerald-500/10 border border-emerald-500/30 rounded-full backdrop-blur-md mb-16"
+            className="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-emerald-500/20 via-green-500/15 to-emerald-500/20 border-2 border-emerald-500/40 rounded-full backdrop-blur-md mb-16 shadow-lg shadow-emerald-500/20"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ delay: 1, duration: 0.8, type: 'spring' }}
-            whileHover={{ scale: 1.05 }}
+            transition={{ delay: 1.1, duration: 0.8, type: 'spring' }}
+            whileHover={{ scale: 1.05, boxShadow: '0 10px 30px rgba(16, 185, 129, 0.3)' }}
           >
             <motion.span
-              className="w-3 h-3 bg-emerald-500 rounded-full"
+              className="w-3 h-3 bg-emerald-500 rounded-full shadow-lg shadow-emerald-500/50"
               animate={{ scale: [1, 1.5, 1], opacity: [1, 0.7, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              transition={{ 
+                duration: 2, 
+                repeat: Infinity,
+                type: 'tween',
+                ease: 'easeInOut'
+              }}
             />
-            <span className="text-emerald-400 text-base font-medium">
+            <span className="text-emerald-300 text-lg font-semibold">
               Available for Opportunities
             </span>
           </motion.div>
 
-          {/* CTAs with Enhanced Animations - MUCH LARGER BUTTONS */}
+          {/* CTAs with Enhanced Animations - Attractive Button Group */}
           <motion.div
-            className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-16"
+            className="button-group mb-20"
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 1.2, duration: 0.8 }}
           >
             <motion.button
               onClick={() => scrollToSection('projects')}
-              className="group relative inline-flex items-center gap-4 bg-transparent border-2 border-cyan-500 text-cyan-400 px-12 py-6 rounded-lg text-xl font-semibold transition-all duration-300 hover:bg-cyan-500/10 hover:shadow-lg hover:shadow-cyan-500/50 hover:-translate-y-1 overflow-hidden"
-              whileHover={{ scale: 1.05 }}
+              className="btn-primary group relative inline-flex items-center gap-4 px-14 py-7 text-xl font-semibold"
+              whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(6, 182, 212, 0.3)' }}
               whileTap={{ scale: 0.98 }}
               initial={{ opacity: 0, x: -20 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ delay: 1.3 }}
+              transition={{ delay: 1.3, type: 'spring', stiffness: 200 }}
             >
               <span className="relative z-10">View Projects</span>
               <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform relative z-10" />
@@ -318,12 +399,12 @@ export default function Hero() {
             <motion.a
               href="/resume.pdf"
               download
-              className="group inline-flex items-center gap-4 bg-slate-800/50 border border-slate-700 text-slate-300 px-12 py-6 rounded-lg text-xl font-medium transition-all duration-300 hover:border-slate-600 hover:text-white hover:bg-slate-800 hover:-translate-y-1"
+              className="btn-secondary group inline-flex items-center gap-4 px-14 py-7 text-xl font-medium"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
               initial={{ opacity: 0, x: 20 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ delay: 1.4 }}
+              transition={{ delay: 1.4, type: 'spring', stiffness: 200 }}
               suppressHydrationWarning
             >
               <Download size={24} className="group-hover:animate-bounce" />
@@ -333,7 +414,7 @@ export default function Hero() {
 
           {/* Social Icons with Enhanced Hover - MORE SPACING */}
           <motion.div
-            className="flex items-center justify-center gap-6 pt-12"
+            className="flex items-center justify-center gap-8 pt-16"
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 1.6, duration: 0.8 }}
@@ -348,8 +429,13 @@ export default function Hero() {
                 href={href}
                 target={href.startsWith('http') ? '_blank' : undefined}
                 rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className={`group relative p-4 bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl hover:border-cyan-500 transition-all ${color}`}
-                whileHover={{ scale: 1.15, y: -5, rotate: [0, -10, 10, 0] }}
+                className={`group relative p-5 bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl hover:border-cyan-500 transition-all ${color} hover:shadow-lg hover:shadow-cyan-500/30`}
+                whileHover={{ 
+                  scale: 1.15, 
+                  y: -8, 
+                  rotate: -10,
+                  transition: { type: 'spring', stiffness: 300, damping: 10 }
+                }}
                 whileTap={{ scale: 0.9 }}
                 title={label}
                 suppressHydrationWarning

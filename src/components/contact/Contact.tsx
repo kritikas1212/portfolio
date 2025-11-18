@@ -89,7 +89,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative py-20 md:py-32 bg-slate-800/50">
+    <section id="contact" className="relative py-24 md:py-40">
       <div className="max-w-screen-2xl mx-auto px-6 md:px-8 lg:px-16 xl:px-24">
         <motion.div
           ref={ref}
@@ -100,7 +100,8 @@ export default function Contact() {
         >
           {/* Section Header */}
           <motion.div variants={itemVariants} className="text-center">
-            <h2 className="text-5xl md:text-6xl font-bold text-slate-100 mb-16 md:mb-20">
+            <h2 className="text-5xl md:text-6xl font-bold text-slate-100 mb-16 md:mb-20 flex items-center justify-center gap-4">
+              <span className="text-4xl md:text-5xl">📧</span>
               <span className="text-slate-300">Get In </span>
               <span className="text-cyan-400">Touch</span>
             </h2>
@@ -113,15 +114,15 @@ export default function Contact() {
           </motion.div>
 
           {/* Two Column Layout */}
-          <div className="grid md:grid-cols-2 gap-16">
+          <div className="grid md:grid-cols-2 gap-20">
             {/* Left Column - Contact Form */}
             <motion.div
               variants={itemVariants}
             >
-              <form onSubmit={handleSubmit} className="space-y-8">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Name */}
                 <div>
-                  <label htmlFor="name" className="block text-base font-medium text-slate-300 mb-3">
+                  <label htmlFor="name" className="block text-base font-medium text-slate-300 mb-3 text-center">
                     Name <span className="text-red-400">*</span>
                   </label>
                   <input
@@ -138,7 +139,7 @@ export default function Contact() {
 
                 {/* Email */}
                 <div>
-                  <label htmlFor="email" className="block text-base font-medium text-slate-300 mb-3">
+                  <label htmlFor="email" className="block text-base font-medium text-slate-300 mb-3 text-center">
                     Email <span className="text-red-400">*</span>
                   </label>
                   <input
@@ -155,7 +156,7 @@ export default function Contact() {
 
                 {/* Subject */}
                 <div>
-                  <label htmlFor="subject" className="block text-base font-medium text-slate-300 mb-3">
+                  <label htmlFor="subject" className="block text-base font-medium text-slate-300 mb-3 text-center">
                     Subject <span className="text-red-400">*</span>
                   </label>
                   <select
@@ -177,7 +178,7 @@ export default function Contact() {
 
                 {/* Message */}
                 <div>
-                  <label htmlFor="message" className="block text-base font-medium text-slate-300 mb-3">
+                  <label htmlFor="message" className="block text-base font-medium text-slate-300 mb-3 text-center">
                     Message <span className="text-red-400">*</span>
                   </label>
                   <textarea
@@ -192,11 +193,11 @@ export default function Contact() {
                   />
                 </div>
 
-                {/* Submit Button - MUCH LARGER */}
+                {/* Submit Button - Attractively Styled */}
                 <motion.button
                   type="submit"
                   disabled={isSubmitting}
-                  className="group relative w-full inline-flex items-center justify-center gap-4 bg-transparent border-2 border-cyan-500 text-cyan-400 px-12 py-6 rounded-lg text-xl font-semibold transition-all duration-300 hover:bg-cyan-500/10 hover:shadow-lg hover:shadow-cyan-500/50 hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+                  className="btn-primary group relative w-full inline-flex items-center justify-center gap-4 px-12 py-6 text-xl font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                   whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                   whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                 >
@@ -207,9 +208,9 @@ export default function Contact() {
                     </>
                   ) : (
                     <>
-                      <Send size={24} />
-                      <span>Send Message</span>
-                      <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                      <Send size={24} className="relative z-10" />
+                      <span className="relative z-10">Send Message</span>
+                      <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform relative z-10" />
                     </>
                   )}
                   <motion.div
@@ -249,9 +250,9 @@ export default function Contact() {
             {/* Right Column - Contact Info */}
             <motion.div
               variants={itemVariants}
-              className="space-y-10"
+              className="space-y-8"
             >
-              <div>
+              <div className="text-center">
                 <h3 className="text-3xl md:text-4xl font-bold text-slate-100 mb-8">Contact Information</h3>
                 <p className="text-slate-400 text-xl md:text-2xl leading-relaxed mb-12">
                   I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your visions.

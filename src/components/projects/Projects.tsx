@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { ExternalLink, Github, ChevronDown, ChevronUp, Trophy, Sparkles } from 'lucide-react';
+import Counter from '../common/Counter';
 
 const projects = [
   {
@@ -111,7 +112,7 @@ export default function Projects() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
 
   return (
-    <section id="projects" className="relative py-20 md:py-32 bg-slate-800/50 overflow-hidden">
+    <section id="projects" className="relative py-24 md:py-40 overflow-hidden bg-gradient-to-b from-slate-900 to-slate-950/50">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 left-0 w-96 h-96 bg-cyan-500 rounded-full blur-3xl" />
@@ -132,11 +133,12 @@ export default function Projects() {
             className="text-center"
           >
             <motion.h2
-              className="text-5xl md:text-6xl font-bold text-slate-100 mb-16 md:mb-20"
+              className="text-5xl md:text-6xl font-bold text-slate-100 mb-16 md:mb-20 flex items-center justify-center gap-4"
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.3 }}
             >
+              <span className="text-4xl md:text-5xl">🚀</span>
               <span className="text-slate-300">Featured </span>
               <span className="text-cyan-400">Projects</span>
             </motion.h2>
@@ -149,7 +151,7 @@ export default function Projects() {
           </motion.div>
 
           {/* Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {projects.map((project, index) => (
               <motion.div
                 key={project.id}
@@ -159,24 +161,33 @@ export default function Projects() {
                 onHoverEnd={() => setHoveredId(null)}
               >
                 <motion.div
-                  className="group relative bg-slate-900/50 rounded-2xl p-8 md:p-10 border border-slate-800 hover:border-slate-700 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-cyan-500/5 h-full flex flex-col overflow-hidden container-content"
+                  className="group relative bg-gradient-to-br from-slate-900/90 to-slate-950/90 backdrop-blur-sm rounded-2xl p-8 md:p-10 border-2 border-slate-800/50 hover:border-cyan-500/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-cyan-500/20 h-full flex flex-col overflow-hidden container-content"
                   whileHover={{ 
-                    y: -8,
-                    scale: 1.03,
-                    borderColor: 'rgba(6, 182, 212, 0.5)',
+                    y: -12,
+                    scale: 1.02,
+                    borderColor: 'rgba(6, 182, 212, 0.6)',
                   }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                   style={{ transformOrigin: 'center' }}
                 >
-                  {/* Image/Icon Section - BIGGER */}
-                  <div className={`relative h-56 md:h-64 bg-gradient-to-br ${project.gradient} rounded-xl mb-8 flex items-center justify-center overflow-hidden`}>
+                  {/* Glow effect on hover */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/10 to-cyan-500/0 opacity-0 group-hover:opacity-100 rounded-2xl"
+                    transition={{ duration: 0.3 }}
+                  />
+                  {/* Image/Icon Section - Enhanced with better visual */}
+                  <div className={`relative h-56 md:h-64 bg-gradient-to-br ${project.gradient} rounded-xl mb-8 flex items-center justify-center overflow-hidden border border-slate-700/30 shadow-lg`}>
                     <motion.div
                       className="text-8xl"
                       animate={{
                         scale: hoveredId === project.id ? [1, 1.2, 1] : 1,
-                        rotate: hoveredId === project.id ? [0, 5, -5, 0] : 0,
+                        rotate: hoveredId === project.id ? 5 : 0,
                       }}
-                      transition={{ duration: 0.5 }}
+                      transition={{ 
+                        duration: 0.5,
+                        scale: { type: 'keyframes', times: [0, 0.5, 1], duration: 0.5 },
+                        rotate: { type: 'spring', stiffness: 200, damping: 10 }
+                      }}
                     >
                       {project.thumbnail}
                     </motion.div>
@@ -234,18 +245,18 @@ export default function Projects() {
 
                     {/* Title - Bigger with more spacing */}
                     <motion.h3
-                      className="text-2xl md:text-3xl font-bold text-white mb-5 group-hover:text-cyan-400 transition-colors leading-tight break-words"
+                      className="text-2xl md:text-3xl font-bold text-white mb-5 group-hover:text-cyan-400 transition-colors leading-tight break-words text-center"
                       initial={{ opacity: 0 }}
                       animate={inView ? { opacity: 1 } : {}}
                       transition={{ delay: index * 0.1 + 0.3 }}
                     >
                       {project.title}
                     </motion.h3>
-                    <p className="text-slate-400 text-base md:text-lg mb-5">{project.date}</p>
-                    <p className="text-slate-400 text-lg md:text-xl leading-relaxed mb-10 flex-1 break-words">{project.description}</p>
+                    <p className="text-slate-400 text-base md:text-lg mb-5 text-center">{project.date}</p>
+                    <p className="text-slate-400 text-lg md:text-xl leading-relaxed mb-10 flex-1 break-words text-center">{project.description}</p>
 
                     {/* Metrics Grid - More spacing */}
-                    <div className="grid grid-cols-2 gap-5 mb-10">
+                    <div className="grid grid-cols-2 gap-4 mb-10">
                       {project.metrics.map((metric, metricIndex) => (
                         <motion.div
                           key={metricIndex}
@@ -256,14 +267,22 @@ export default function Projects() {
                           transition={{ delay: index * 0.1 + metricIndex * 0.1 + 0.4 }}
                           style={{ transformOrigin: 'center' }}
                         >
-                          <div className="text-cyan-400 font-bold text-xl md:text-2xl mb-2 break-words">{metric.value}{metric.suffix}</div>
+                          <div className="text-cyan-400 font-bold text-xl md:text-2xl mb-2 break-words">
+                            {metric.value.includes('%') || metric.value.includes('K') || metric.value.includes('+') || metric.value.includes('<') ? (
+                              metric.value + metric.suffix
+                            ) : (
+                              <>
+                                <Counter value={parseFloat(metric.value)} suffix={metric.suffix} duration={2} decimals={metric.value.includes('.') ? 2 : 0} />
+                              </>
+                            )}
+                          </div>
                           <div className="text-slate-500 text-sm md:text-base break-words">{metric.label}</div>
                         </motion.div>
                       ))}
                     </div>
 
                     {/* Tech Stack - Larger pills with more spacing */}
-                    <div className="flex flex-wrap gap-4 mb-8">
+                    <div className="flex flex-wrap gap-3 mb-8">
                       {project.tech.slice(0, 4).map((tech, techIndex) => (
                         <motion.span
                           key={tech}
@@ -327,39 +346,39 @@ export default function Projects() {
                       )}
                     </AnimatePresence>
 
-                    {/* Actions */}
+                    {/* Actions - Attractive Button Group */}
                     <div className="flex items-center justify-between gap-4 pt-6 border-t border-slate-700/50 mt-auto">
                       <motion.button
                         onClick={() => setExpandedId(expandedId === project.id ? null : project.id)}
-                        className="flex items-center gap-2 px-4 py-2 text-base text-cyan-400 hover:text-cyan-300 transition-colors font-medium rounded-lg hover:bg-cyan-500/10"
-                        whileHover={{ x: 5 }}
+                        className="group/btn flex items-center gap-2 px-5 py-2.5 text-base text-cyan-400 hover:text-cyan-300 transition-all font-medium rounded-lg hover:bg-cyan-500/10 border border-transparent hover:border-cyan-500/30"
+                        whileHover={{ x: 5, scale: 1.02 }}
                         whileTap={{ scale: 0.95 }}
                       >
                         {expandedId === project.id ? (
                           <>
-                            <ChevronUp size={20} />
+                            <ChevronUp size={20} className="group-hover/btn:-translate-y-0.5 transition-transform" />
                             Less
                           </>
                         ) : (
                           <>
-                            <ChevronDown size={20} />
+                            <ChevronDown size={20} className="group-hover/btn:translate-y-0.5 transition-transform" />
                             More
                           </>
                         )}
                       </motion.button>
-                      <div className="flex gap-2">
+                      <div className="flex gap-3">
                         {project.links.live !== '#' && (
                           <motion.a
                             href={project.links.live}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-2 bg-slate-700/50 border border-slate-600 rounded-lg hover:border-cyan-500 hover:bg-cyan-500/10 transition-all"
+                            className="group/link p-3 bg-slate-700/50 border border-slate-600 rounded-lg hover:border-cyan-500 hover:bg-cyan-500/10 transition-all hover:shadow-lg hover:shadow-cyan-500/20"
                             title="Live Demo"
-                            whileHover={{ scale: 1.1, rotate: 5 }}
+                            whileHover={{ scale: 1.1, rotate: 5, y: -2 }}
                             whileTap={{ scale: 0.9 }}
                             suppressHydrationWarning
                           >
-                            <ExternalLink size={16} className="text-cyan-400" />
+                            <ExternalLink size={18} className="text-cyan-400 group-hover/link:text-cyan-300 transition-colors" />
                           </motion.a>
                         )}
                         {project.links.github !== '#' && (
@@ -367,13 +386,13 @@ export default function Projects() {
                             href={project.links.github}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-2 bg-slate-700/50 border border-slate-600 rounded-lg hover:border-emerald-500 hover:bg-emerald-500/10 transition-all"
+                            className="group/link p-3 bg-slate-700/50 border border-slate-600 rounded-lg hover:border-emerald-500 hover:bg-emerald-500/10 transition-all hover:shadow-lg hover:shadow-emerald-500/20"
                             title="GitHub"
-                            whileHover={{ scale: 1.1, rotate: -5 }}
+                            whileHover={{ scale: 1.1, rotate: -5, y: -2 }}
                             whileTap={{ scale: 0.9 }}
                             suppressHydrationWarning
                           >
-                            <Github size={16} className="text-emerald-400" />
+                            <Github size={18} className="text-emerald-400 group-hover/link:text-emerald-300 transition-colors" />
                           </motion.a>
                         )}
                       </div>

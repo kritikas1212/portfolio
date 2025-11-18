@@ -76,7 +76,7 @@ export default function Achievements() {
   const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
 
   return (
-    <section id="achievements" className="relative py-20 md:py-32 bg-slate-800/50">
+    <section id="achievements" className="relative py-24 md:py-40">
       <div className="max-w-screen-2xl mx-auto px-6 md:px-8 lg:px-16 xl:px-24">
         <motion.div
           ref={ref}
@@ -87,7 +87,8 @@ export default function Achievements() {
         >
           {/* Section Header */}
           <motion.div variants={itemVariants} className="text-center">
-            <h2 className="text-5xl md:text-6xl font-bold text-slate-100 mb-16 md:mb-20">
+            <h2 className="text-5xl md:text-6xl font-bold text-slate-100 mb-16 md:mb-20 flex items-center justify-center gap-4">
+              <span className="text-4xl md:text-5xl">🏆</span>
               <span className="text-slate-300">Achievements & </span>
               <span className="text-cyan-400">Milestones</span>
             </h2>
@@ -100,7 +101,7 @@ export default function Achievements() {
           </motion.div>
 
           {/* Achievements Grid - More Spacious */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {achievements.map((achievement, index) => {
               const borderColors: Record<string, string> = {
                 'yellow-500/50': 'rgba(234, 179, 8, 0.5)',
@@ -115,19 +116,19 @@ export default function Achievements() {
                 <motion.div
                   key={index}
                   variants={itemVariants}
-                  className={`group relative bg-gradient-to-br ${achievement.colorGradient} backdrop-blur-sm rounded-xl p-10 md:p-12 border hover:shadow-2xl transition-all duration-300 overflow-hidden container-content`}
+                  className={`group relative bg-gradient-to-br ${achievement.colorGradient} backdrop-blur-sm rounded-xl p-8 md:p-10 border hover:shadow-2xl transition-all duration-300 overflow-hidden container-content`}
                   style={{
                     borderColor: borderColors[achievement.borderColor] || 'rgba(148, 163, 184, 0.5)',
                     transformOrigin: 'center',
                   }}
                   whileHover={{ scale: 1.03, y: -8 }}
                 >
-                  <div className={`text-6xl md:text-7xl mb-8 ${achievement.iconColor} transition-transform duration-300`}>
+                  <div className={`text-6xl md:text-7xl mb-8 ${achievement.iconColor} transition-transform duration-300 text-center`}>
                     {achievement.icon}
                   </div>
 
-                  <h3 className="text-xl md:text-2xl font-bold text-white mb-4">{achievement.title}</h3>
-                  <p className="text-slate-400 text-base md:text-lg leading-relaxed">{achievement.description}</p>
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-4 text-center">{achievement.title}</h3>
+                  <p className="text-slate-400 text-base md:text-lg leading-relaxed text-center">{achievement.description}</p>
                 </motion.div>
               );
             })}
